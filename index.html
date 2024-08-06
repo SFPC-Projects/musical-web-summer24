@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Musical Web Summer 2024</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.35/Tone.js"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div id="grid-wrapper">
+        <div id="screen">
+            <!-- <canvas id="woscope-canvas"></canvas> -->
+
+            <!-- This will all need to be refactored into a config that we will loop once and create all pages. If you change don't do this in HTML use javascript -->
+            <div
+                style="position: relative; overflow: hidden; height: 240px; width: 305px; border: 0.5px solid rebeccapurple;">
+                <iframe scrolling="yes" style="position: absolute; top: -287px; left: 0px; zoom: 115%;"
+                src="https://behavioralist.vercel.app" title="Lot radio set" height="1000px"></iframe>
+                <a style="position: absolute; top:0; left: 0;right: 0; bottom: 0;"
+                    href="https://behavioralist.vercel.app" target="_blank">
+                </a>
+            </div>
+
+            <div
+                style="position: relative; overflow: hidden; height: 240px; width: 305px; border: 0.5px solid rebeccapurple;">
+                <iframe scrolling="yes" style="position: absolute; top: -130px; left: -15px; zoom: 115%;"
+                src="https://jeanetteandre.ws/weather-song/" title="Lot radio set" height="1000px"></iframe>
+                <a style="position: absolute; top:0; left: 0;right: 0; bottom: 0;"
+                    href="https://jeanetteandre.ws/weather-song/" target="_blank">
+                </a>
+            </div>
+
+            <div
+                style="position: relative; overflow: hidden; height: 240px; width: 305px; border: 0.5px solid rebeccapurple;">
+                <iframe scrolling="yes" style="position: absolute; top: -370px; left: -15px; zoom: 110%;"
+                src="https://888-forgott.radio" title="Lot radio set" height="1000px"></iframe>
+                <a style="position: absolute; top:0; left: 0;right: 0; bottom: 0;"
+                    href="https://888-forgott.radio" target="_blank">
+                </a>
+            </div>
+  
+            <div
+                style="position: relative; overflow: hidden; height: 240px; width: 305px; border: 0.5px solid rebeccapurple;">
+                <iframe scrolling="yes" style="position: absolute; top: -300px; left: -15px; zoom: 100%;"
+                src="https://jeanetteandre.ws/ufo-dog/" title="Lot radio set" height="1000px"></iframe>
+                <a style="position: absolute; top:0; left: 0;right: 0; bottom: 0;"
+                    href="https://jeanetteandre.ws/ufo-dog/" target="_blank">
+                </a>
+            </div>
+
+        </div>
+        <div id="menu">
+            <div id="projects-grid">
+                <!-- TODO: refactor this with javascript to reduce this file size -->
+                <div id="info"><img id="info-btn" src="assets/buttons/btn-info.png" draggable="false"></div>
+                <img id="btn" title="project title by artist" src="assets/buttons/btn1.png" draggable="false">
+                <img id="btn" title="project title by artist" src="assets/buttons/btn1.png" draggable="false">
+                <img id="btn" title="project title by artist" src="assets/buttons/btn1.png" draggable="false">
+                <img id="btn" title="project title by artist" src="assets/buttons/btn1.png" draggable="false">
+                <img id="btn" title="project title by artist" src="assets/buttons/btn1.png" draggable="false">
+                <img id="btn" title="project title by artist" src="assets/buttons/btn1.png" draggable="false">
+                <img id="btn" title="project title by artist" src="assets/buttons/btn1.png" draggable="false">
+                <img id="btn" title="project title by artist" src="assets/buttons/btn1.png" draggable="false">
+                <img id="btn" title="project title by artist" src="assets/buttons/btn1.png" draggable="false">
+                <img id="btn" title="project title by artist" src="assets/buttons/btn1.png" draggable="false">
+                <img id="btn" title="project title by artist" src="assets/buttons/btn1.png" draggable="false">
+                <img id="btn" title="project title by artist" src="assets/buttons/btn1.png" draggable="false">
+                <img id="btn" title="project title by artist" src="assets/buttons/btn1.png" draggable="false">
+                <img id="btn" title="project title by artist" src="assets/buttons/btn1.png" draggable="false">
+                <img id="btn" title="project title by artist" src="assets/buttons/btn1.png" draggable="false">
+                <img id="btn" title="project title by artist" src="assets/buttons/btn1.png" draggable="false">
+                <img id="btn" title="project title by artist" src="assets/buttons/btn1.png" draggable="false">
+                <img id="btn" title="project title by artist" src="assets/buttons/btn1.png" draggable="false">
+                <img id="btn" title="project title by artist" src="assets/buttons/btn1.png" draggable="false">
+                <img id="btn" title="project title by artist" src="assets/buttons/btn1.png" draggable="false">
+                <img id="btn" title="project title by artist" src="assets/buttons/btn1.png" draggable="false">
+                <img id="btn" title="project title by artist" src="assets/buttons/btn1.png" draggable="false">
+                <img id="btn" title="project title by artist" src="assets/buttons/btn1.png" draggable="false">
+                <img id="btn" title="project title by artist" src="assets/buttons/btn1.png" draggable="false">
+                <img id="sounds-text" src="assets/sounds.png" draggable="false">
+            </div>
+            <div id="sounds-grid">
+                <!-- TODO: refactor this with javascript to reduce this file size -->
+                <div id="sound-img1"><img id="sound-btn1" src="assets/buttons/btn2.png" draggable="false"></div>
+                <div id="sound-img2"><img id="sound-btn2" src="assets/buttons/btn2.png" draggable="false"></div>
+                <div id="sound-img3"><img id="sound-btn3" src="assets/buttons/btn2.png" draggable="false"></div>
+                <div id="sound-img4"><img id="sound-btn4" src="assets/buttons/btn2.png" draggable="false"></div>
+                <audio id="myAudio1" src="assets/audio/placeholder.mp3"></audio>
+                <audio id="myAudio2" src="assets/audio/musicalweb.wav"></audio>
+                <audio id="myAudio3" src=""></audio>
+                <audio id="myAudio4" src=""></audio>
+            </div>
+        </div>
+        <div id="off"><img id="off-btn" src="assets/buttons/off-btn.png" draggable="false"></div>
+        <img src="assets/oscilloscope.png" alt="oscilloscope" id="oscilloscope-img" draggable="false">
+</body>
+
+</html>
+<script src="woscope.js"></script>
+<script src="script.js"></script>
+</body>
+
+</html>
