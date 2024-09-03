@@ -1,5 +1,7 @@
+let screen = document.getElementById('screen');
 let infoScreen = document.getElementById('about');
 let myAudio1 = document.getElementById('audio1');
+let audioElements = document.querySelectorAll('#sounds-div audio');
 
 
 
@@ -14,15 +16,15 @@ function initializeWoscope(audioElement) {
     });
 }
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', () => {
     initializeWoscope(myAudio1);
     myAudio1.play();
     initializeAudioButtons();
-});
+})
 
 // Refactored sound buttons
 function initializeAudioButtons() {
-    const soundsGrid = document.querySelector('#sounds-grid');
+    const soundsDiv = document.getElementById('sounds-div');
     
     for (let i = 0; i < 4; i++) {
         const buttonElement = document.createElement('div');
@@ -33,7 +35,7 @@ function initializeAudioButtons() {
 
         const img = document.createElement('img');
         img.className = 'sound-btn';
-        img.src = 'assets/buttons/dial.png';
+        img.src = 'assets/oscilloscope/dial.png';
         img.alt = `Sound ${i + 1}`;
         img.draggable = false;
 
@@ -50,7 +52,7 @@ function initializeAudioButtons() {
             audio.play();
         });
 
-        soundsGrid.appendChild(buttonElement);
+        soundsDiv.appendChild(buttonElement);
 
         const circle = buttonElement.querySelector('.circle');
         setCircleBorderColor(circle, i);
@@ -58,7 +60,12 @@ function initializeAudioButtons() {
 };
 
 function setCircleBorderColor(circle, index) {
-    const colors = ['#d1b96f', '#9ebe78', '#5b8ccb', '#cd695e'];
+    const colors = [
+        'rgba(209, 185, 111, 0.9)',  
+        'rgba(158, 190, 120, 0.9)',  
+        'rgba(91, 140, 203, 0.9)',  
+        'rgba(205, 105, 94, 0.9)'    
+    ];
     circle.style.borderColor = colors[index];
 }
 
@@ -88,27 +95,72 @@ document.addEventListener("DOMContentLoaded", function() {
     fetch('projects.csv')
         .then(response => response.text())
         .then(csvText => {
-            let projects = parseCSV(csvText);
+            let projects = CSVToArray(csvText, ",");
+            console.log(projects);
             setupButtons(projects);
         });
 });
+ 
+// Parse CSV
+function CSVToArray(strData, strDelimiter) {
+    strDelimiter = (strDelimiter || ",");
 
-function parseCSV(csvText) {
-    let rows = csvText.trim().split('\n').slice(1); 
-    return rows.map(row => {
-        let [title, artist, link, description] = row.split(',');
-        return { title, artist, link, description };
+    // Regular expression to parse CSV
+    var objPattern = new RegExp(
+        (
+            // Delimiters
+            "(\\" + strDelimiter + "|\\r?\\n|\\r|^)" +
+            // Quoted fields
+            "(?:\"([^\"]*(?:\"\"[^\"]*)*)\"|" +
+            // Standard fields
+            "([^\"\\" + strDelimiter + "\\r\\n]*))"
+        ),
+        "gi"
+    );
+
+    var arrData = [[]];
+    var arrMatches = null;
+
+    // Loop through all matches
+    while (arrMatches = objPattern.exec(strData)) {
+        var strMatchedDelimiter = arrMatches[1];
+        if (
+            strMatchedDelimiter.length &&
+            strMatchedDelimiter !== strDelimiter
+        ) {
+            arrData.push([]);
+        }
+
+        var strMatchedValue;
+        if (arrMatches[2]) {
+            // Handle quoted fields with embedded quotes
+            strMatchedValue = arrMatches[2].replace(new RegExp("\"\"", "g"), "\"");
+        } else {
+            // Handle standard fields
+            strMatchedValue = arrMatches[3];
+        }
+        arrData[arrData.length - 1].push(strMatchedValue);
+    }
+
+    var headers = arrData[0];
+    var dataRows = arrData.slice(1);
+    var result = dataRows.map(row => {
+        var rowObject = {};
+        headers.forEach((header, index) => {
+            rowObject[header] = row[index];
+        });
+        return rowObject;
     });
+
+    return result;
 }
 
 function setupButtons(projects) {
-    let projectsGrid = document.getElementById('projects-grid');
+    let projectsDiv = document.getElementById('projects-div');
     let numberOfButtons = 5;
 
     for (let i = 0; i < numberOfButtons; i++) {
-        let buttonSrc = `assets/buttons/btn${i + 1}.png`;
-        let btnContainer = document.createElement('div');
-        btnContainer.className = "btn-container";
+        let buttonSrc = `assets/oscilloscope/btn${i + 1}.png`;
 
         let btn = document.createElement('img');
         btn.src = buttonSrc;
@@ -120,12 +172,10 @@ function setupButtons(projects) {
             pauseAllAudio();
             removeInfo();
             removeIframe();
-            // Display 4 projects on each page
-            addIframe(projects.slice(i*4, i*4+4))
+            addIframe(projects.slice(i*4, i*4+4)); // Display 4 projects on each page
         });
 
-        btnContainer.appendChild(btn);
-        projectsGrid.insertBefore(btnContainer, document.getElementById('sounds-text'));
+        projectsDiv.appendChild(btn);
     }
 }
 
@@ -151,7 +201,7 @@ function addIframe(projects) {
     iframeScreen.id = 'iframe-screen';
 
     projects.forEach((project, index) => {
-        let gridItem = createGridItem(index, project);
+        let gridItem = createGridItem(project);
         // Define grid column and row placement
         let row = Math.floor(index / 2) + 1;
         let column = (index % 2) + 1;
@@ -164,31 +214,36 @@ function addIframe(projects) {
     screenElement.appendChild(iframeScreen);
 }
 
-function createGridItem(id, project) {
+function createGridItem(project) {
     let gridItem = document.createElement('div');
     gridItem.style.border = '0.5px solid rebeccapurple';
     gridItem.style.position = 'relative';
 
-    let iframe = document.createElement('iframe');
-    iframe.id = `myiframe${id}`;
-    iframe.src = project.link;
-    iframe.title = project.title;
-    gridItem.appendChild(iframe);
-
-    // Project links
-    let anchor = document.createElement('a');
-    anchor.id = 'anchor';
-    anchor.href = project.link;
-    anchor.target = '_blank';
-    gridItem.appendChild(anchor);
+    if (project.image === 'TRUE') {
+        // Display image if images column is TRUE
+        let img = document.createElement('img');
+        img.className = "project-image"
+        img.src = `assets/project-images/${project.filename}`;
+        img.alt = project.title;
+        gridItem.appendChild(img);
+    } else {
+        // Display iframe if images column is FALSE
+        let iframe = document.createElement('iframe');
+        iframe.src = project.link;
+        iframe.title = project.title;
+        gridItem.appendChild(iframe);
+    }
 
     // Project overlay
     let overlay = document.createElement('div');
     overlay.id = 'overlay';
-    overlay.innerHTML = `<div><strong>${project.title}</strong><br>${project.artist}<br>${project.description}</div>`;
+    overlay.innerHTML = `<div><h2>${project.title}</h2><p>${project.artist}</p><p>${project.description}</p></div>`;
     gridItem.appendChild(overlay);
 
-    // Show/hide overlay on hover
+    overlay.addEventListener('click', function () {
+        window.open(project.link, '_blank');
+    });
+
     gridItem.addEventListener('mouseover', () => {
         overlay.style.display = 'flex';
     });
@@ -198,3 +253,17 @@ function createGridItem(id, project) {
 
     return gridItem;
 }
+
+document.getElementById('off-btn').addEventListener('click', function() {
+    // Check if the screen is currently powered on or off
+    if (screen.classList.contains('power-on') || !screen.classList.contains('power-off')) {
+      // If powered on, trigger power-off animation
+      screen.classList.remove('power-on');
+      screen.classList.add('power-off');
+      pauseAllAudio();
+    } else {
+      // If powered off, trigger power-on animation
+      screen.classList.remove('power-off');
+      screen.classList.add('power-on');
+    }
+  });

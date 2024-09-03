@@ -4,6 +4,10 @@ html, body {
     padding: 0;
     justify-content: center;
     align-content: center;
+    font-family: "Inconsolata", monospace;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
 
     /* Disable highlighting */
     -webkit-touch-callout: none; /* iOS Safari */
@@ -30,10 +34,19 @@ html, body {
     position: absolute;
     width: 100%;
     height: 100%; 
-    z-index: 4; 
+    z-index: 3; 
 }
 
 /* ------ Oscilloscope Screen ------ */
+
+#screen-background {
+    /* This is for the off button */
+    grid-column: 2/3;
+    grid-row: 3/4;
+    background-color: black;
+    z-index: 4;
+}
+
 #screen {
     position: absolute;
     display: grid;
@@ -46,17 +59,25 @@ html, body {
     width: 100%;
     height: 100%;
     z-index: 5;
+    transition: background-color 0.5s;
 }
 
 /* About page */
 #about {
-    background-color: green;
+    background-color: #dbf74f;
+    color: black;
     z-index: 99999;
     grid-column: 1/3;
     grid-row: 1/3;
     overflow: auto; 
     max-width: 100%;
     max-height: 100%;
+    padding: 1vw;
+    align-items: center;
+}
+
+h1, h2 {
+    font-family: "Syne Mono", monospace;
 }
 
 /* iFrames */
@@ -77,16 +98,16 @@ iframe {
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%) scale(0.5); /* Center the iframe content */
+    transform: translate(-50%, -50%) scale(0.5); 
 }
 
-#anchor {
-    z-index: 99999;
+.project-image {
+    height: 100%;
+    width: 100%;
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); 
 }
 
 #overlay {
@@ -96,13 +117,22 @@ iframe {
     right: 0;
     bottom: 0;
     background-color: rgba(0, 0, 0, 0.8);
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    justify-content: start;
     color: white;
-    font-size: 16px;
+    font-size: 1.1vw;
     text-align: center;
     display: none;
+    flex-direction: column;
+    max-width: 100%;
+    max-height: 100%;
+    overflow: scroll;
+    padding: 1vw;  
+    z-index: 999;
+    cursor: pointer;
+}
+
+#overlay:hover > h2 {
+    color: #dbf74f;
 }
 
 /* Home page */
@@ -134,35 +164,29 @@ iframe {
 #menu {
     grid-column: 4/5;
     grid-row: 2/5;
-    width: calc(100%-2vw);
-    height: 90%;
     z-index: 5;
-    padding-inline: 2vw;
-    padding-top: 1vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
 }
 
-#projects-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    z-index: 3;
-    width: 100%;
-    height: 90%;
-    justify-items: center;
-    align-items: center;
-    margin-top: -0.5vw;
+#projects-text, #sounds-text, #volume-text {
+    max-width: calc(100% - 4vw);
+    filter: blur(0.03vw);
+    opacity: 90%;
+}
+
+#sounds-text {
+    margin-bottom: -1.5vw;
 }
 
 /* Info & Home buttons */
-#top-btns {
+#home-div {
+    width: 100%;
     display: flex;
-    gap: 10px;
-    align-items: center;
-    grid-column: 1/4;
-    gap: 3vw;
-    background: rgba(189, 188, 180, 0.5);
-    padding: 1.1vw 5.9vw;
-    border-radius: 5px;
-    filter: blur(0.8px);
+    justify-content: space-evenly;
+    filter: blur(0.05vw);
 }
 
 #info-btn, #home-btn{
@@ -177,47 +201,35 @@ iframe {
 }
 
 /* Project buttons */
-#btn{
+
+#projects-div {
+    display: flex;
+    justify-content: space-evenly;
+    width: calc(100% - 2vw); 
+}
+
+#btn {
     cursor: pointer;
-    width: 6vw;
+    width: 4vw;
     filter: drop-shadow(0px 3px 1px rgba(34, 34, 34, 0.4))
-            blur(0.8px);
+            blur(0.05vw);
     opacity:95%;
 }
 
 #btn:active {
     transform: translateY(3px);
-    filter: blur(0.8px);
-}
-
-#projects-text {
-    grid-column: 1/4;
-    justify-self: center;
-    align-self: center;
-    width: 100%;
-    filter: blur(0.5px);
-    opacity: 90%;
-}
-
-#sounds-text {
-    grid-column: 1/4;
-    justify-self: center;
-    align-self: center;
-    width: 100%;
-    filter: blur(0.5px);
-    opacity: 90%;
+    filter :blur(0.05vw);
 }
 
 /* Sound buttons */
-#sounds-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    width: 95%;
-    height: 10%;
-    justify-items: center;
-    align-items: center;
-    padding-left: 0.2vw;
-    margin-top: -0.8vw;
+#sounds-div {
+    width: calc(100% - 8vh);
+    display: flex;
+    justify-content: space-between;
+    align-items: center; /* Center align items vertically */
+    padding-top: -2vw; /* Optional: Adjust padding to reduce space */
+    margin-top: 10; /* Remove any default margin */
+    box-sizing: border-box; /* Include padding in the width calculation */
 }
 
 .sound-btn {
@@ -225,13 +237,13 @@ iframe {
     margin-left: .6vw;
     cursor: pointer;
     height: 3vw;
-    filter: drop-shadow(-2px -2px 0.4px rgba(34, 34, 34, 0.3))
-            blur(0.2px);
+    filter: drop-shadow(-2px -2px 0.4px rgba(34, 34, 34, 0.3));
+    display: flex;
 }
 
-#sounds-grid img:active{
+#sounds-div img:active{
     transform: translateX(-2px) translateY(-2px);
-    filter: blur(0.2px);
+    filter: none;
 }
 
 .circle {
@@ -242,17 +254,27 @@ iframe {
     border-radius: 50%;
     background-color: transparent;
     z-index: 2;
-    filter: blur(0.5px);
+    filter: blur(0.01vw);
 }
 
 .sin-img {
     background-size: 6vw;
     background-position: center; 
-    filter: blur(0.65px);
+    filter: blur(0.05vw);
     opacity: 80%;
-    background-image: url('assets/buttons/sinwave.png');
+    background-image: url('assets/oscilloscope/sinwave.png');
     background-repeat: no-repeat;
     padding: 1vw 1vw;
+}
+
+/* Sound buttons */
+
+.volume-symbol {
+    width: 1.5vw;
+    margin: 0.2vw 1vw;
+    opacity: 55%;
+    filter: drop-shadow(1.5px 1.5px 1.5px rgba(34, 34, 34, 0.3))
+            blur(0.05vw);
 }
 
 /* Off Button */
@@ -271,11 +293,49 @@ iframe {
     cursor: pointer;
     height: 2.5vw;
     filter: drop-shadow(0px 2px 1px rgba(34, 34, 34, 0.5))
-            blur(0.8px);
+        blur(0.05vw);
 }
 
 #off-btn:active {
     transform: translateY(2px);
-    filter: blur(0.7px);
+    filter: blur(0.05vw);
 }
+
+@keyframes powerOff {
+    0% {
+      transform: scaleY(1);
+      opacity: 1;
+    }
+    50% {
+      transform: scaleY(0.1);
+      opacity: 0;
+    }
+    100% {
+      transform: scaleY(0);
+      opacity: 0;
+    }
+  }
   
+  @keyframes powerOn {
+    0% {
+      transform: scaleY(0);
+      opacity: 0;
+    }
+    50% {
+      transform: scaleY(0.1);
+      opacity: 0;
+    }
+    100% {
+      transform: scaleY(1);
+      opacity: 1;
+    }
+  }
+  
+  /* Apply Animation Classes */
+  .power-off {
+    animation: powerOff 0.5s forwards;
+  }
+  
+  .power-on {
+    animation: powerOn 0.5s forwards;
+  }

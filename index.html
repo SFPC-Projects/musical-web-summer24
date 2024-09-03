@@ -5,6 +5,11 @@
     <title>Musical Web Summer 2024</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image" href="assets/favicon.png"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Syne+Mono&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@200..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
 
@@ -12,41 +17,89 @@
     <div id="grid-wrapper">
 
         <!-- Oscilloscope Screen -->
+        <div id="screen-background"></div>
         <div id="screen">
             <div id="about" style="display: none;">
-                <p>About The Musical Web</p>
-                <p>The Musical Web was a 10-week sound and code course focused on the reskilling of music composition, co-exploring musicality on the web, and re-thinking distributional methods for our sounds. The goal was to make radical art that used a contemporary medium and technologies, to see HTML, CSS and Javascript as musical tools, and to learn audio processing in p5.js and Max. Together, we gained a broad spectrum knowledge of the various tools and approaches used for working with sound on the web.
+                <h1>ABOUT THE MUSICAL WEB</h1>
+                <p>The Musical Web was a 10-week class focused on re-skilling music composition, co-exploring musicality on the web, and re-thinking ways to share musical experiences online. The goal was to discover new forms with modern mediums and to investigate HTML, CSS and Javascript as musical tools. Together we explored chance, live web APIs, multi-person networking, 3D spaces, and a variety of other frameworks to create sound on the web.</p>
+                <h2>Instructors</h2>
+                <h3>Tommy Martinez (he/him)</h3>
+                <p>Tommy Martinez is an artist and programmer working primarily through research, sound and code. He creates software and musical systems for the internet, embedded devices, and for live multichannel performance. Martinez has performed at MoMA PS1, The DiMenna Center for Classical Music, Fridman Gallery, and Pioneer Works. He has lectured on sound and electronic art at School for Poetic Computation, CNMAT at UC Berkeley, CCRMA at Stanford University, NYU (at IDM and ITP), and Kunstakademie Düsseldorf.</p>
+                <p>
+                    <a href="https://thomasjohnmartinez.com/" target="_blank">Website</a> 
+                    <a href="https://www.instagram.com/ogbabydiesal" target="_blank">Instagram</a> 
+                    <a href="https://twitter.com/ogbabydiesal" target="_blank">Twitter</a> 
                 </p>
-                <p>A special thank you to:</p>
-                <p>Cycling74'</p>
-                <p>p5.js</p>
-                <p>More text here... The Musical Web was a 10-week sound and code course focused on the reskilling of music composition, co-exploring musicality on the web, and re-thinking distributional methods for our sounds. The goal was to make radical art that used a contemporary medium and technologies, to see HTML, CSS and Javascript as musical tools, and to learn audio processing in p5.js and Max. Together, we gained a broad spectrum knowledge of the various tools and approaches used for working with sound on the web.</p>
+                <h3>Maxine de las Pozas (she/her)</h3>
+                <p>
+                    <a href="https://axine.net/" target="_blank">Website</a> 
+                    <a href="https://www.instagram.com/axine.m" target="_blank">Instagram</a> 
+                </p>
+                <h2>Participants</h2>
+                <li>Jeanette Andrews</li>
+                <li>Daniela Aréchiga</li>
+                <li>Jose Arriaza</li>
+                <li>Matthew R.F. Baloušek</li>
+                <li>Dorothy Carlos</li>
+                <li>Adrian Cervantes Mendez</li>
+                <li>Ivy Chang</li>
+                <li>Chelsea Daniel</li>
+                <li>Eva Decker</li>
+                <li>Gabriel Gonzalez</li>
+                <li>Sam (Sim) Hafferty</li>
+                <li>Lamar Hamadalla</li>
+                <li>Sara May Jarvie-Clark</li>
+                <li>Halim Lee</li>
+                <li>Connie Li</li>
+                <li>Patrick Marchwiak</li>
+                <li>Sara Martínez</li>
+                <li>Yafira Martinez</li>
+                <li>Ahzin Nam</li>
+                <li>Nina Nina</li>
+                <li>Micah Parnass</li>
+                <li>Kameron Robinson</li>
+                <li>Jihan Salsabila</li>
+                <li>Alli Sevareid</li>
+                <li>Ben Shirken</li>
+                <li>Shristi Singh</li>
+                <li>Sophia Sobers</li>
+                <li>Adrianna Svitak</li>
+                <li>Alice Wu</li>
+                <li>Yufeng Zhao</li>
+                <li>Steph Zimmerman</li>
+                <h2>A special thank you to:</h2>
+                <li><a href="https://dan.dog/" target="_blank">Dan Gorelick</a></li>
+                <li><a href="https://cycling74.com/" target="_blank">Cycling74'</a></li>
+                <li><a href="https://p5js.org/" target="_blank">p5.js</a></li>
+                <p>The School for Poetic Computation is an experimental school in New York City supporting interdisciplinary study in art, code, hardware and critical theory. It's a place for learning and unlearning. Learn more about SFPC <a href="https://sfpc.study/" target="_blank">here</a>.</p>
             </div>
-            <img src="assets/musicalwebsummer2024.png" alt="Musical Web Summer 2024" class="title" draggable="false">
-            <img src="assets/musicalwebsummer2024.png" alt="Musical Web Summer 2024" class="title" draggable="false">
+            <img src="assets/oscilloscope/musicalwebsummer2024.png" alt="Musical Web Summer 2024" class="title" draggable="false">
+            <img src="assets/oscilloscope/musicalwebsummer2024.png" alt="Musical Web Summer 2024" class="title" draggable="false">
             <canvas id="woscope-canvas"></canvas>
         </div>
 
         <!-- Oscilloscope Button Menu -->
         <div id="menu">
-            <div id="projects-grid">
-                <div id="top-btns">
-                    <img id="info-btn" src="assets/buttons/btn-info.png" alt="Info" draggable="false">
-                    <img id="home-btn" src="assets/buttons/btn-home.png" alt="Home" draggable="false">
-                </div>
-                <img id="projects-text" src="assets/projects.png" alt="Projects" draggable="false">
-                <img id="sounds-text" src="assets/sounds.png" alt="Sounds" draggable="false">
+
+            <div id="home-div">
+                <img id="info-btn" src="assets/oscilloscope/btn-info.png" alt="Info" draggable="false">
+                <img id="home-btn" src="assets/oscilloscope/btn-home.png" alt="Home" draggable="false">
             </div>
-            <div id="sounds-grid">
-                <audio id="audio1" src="assets/audio/welcome.mp3"></audio>
-                <audio id="audio2" src="assets/audio/musicalweb.wav"></audio>
-                <!-- Placeholders for now -->
-                <audio id="audio3" src="assets/audio/welcome.mp3"></audio>
+
+            <img id="projects-text" src="assets/oscilloscope/projects.png" alt="Projects" draggable="false">
+            <div id="projects-div"> <!-- Project buttons are generated here in javascript --></div>
+            
+            <img id="sounds-text" src="assets/oscilloscope/sounds.png" alt="Sounds" draggable="false">
+            <div id="sounds-div">
+                <!-- Sound buttons are generated here in javascript -->
+                <audio id="audio1" src="assets/audio/binaural.m4a"></audio>
+                <audio id="audio2" src="assets/audio/oscirender.wav"></audio>
+                <audio id="audio3" src="assets/audio/musicalweb.wav"></audio>
                 <audio id="audio4" src="assets/audio/welcome.mp3"></audio>
             </div>
         </div>
-        <div id="off"><img id="off-btn" src="assets/buttons/off-btn.png" alt="Off" draggable="false"></div>
-        <img src="assets/oscilloscope.png" alt="oscilloscope" id="oscilloscope-img" alt="Oscilloscope" draggable="false">
+        <div id="off"><img id="off-btn" src="assets/oscilloscope/off-btn.png" alt="Off" draggable="false"></div>
+        <img src="assets/oscilloscope/oscilloscope.png" alt="oscilloscope" id="oscilloscope-img" alt="Oscilloscope" draggable="false">
 </body>
 
 </html>
