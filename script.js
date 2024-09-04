@@ -1,11 +1,11 @@
 let screen = document.getElementById('screen');
 let infoScreen = document.getElementById('about');
 let myAudio1 = document.getElementById('audio1');
-let audioElements = document.querySelectorAll('audio');
 let soundsDiv = document.getElementById('sounds-div');
 let volumeSlider = document.getElementById('volume-slider');
 let audioUpload = document.getElementById('audio-upload');
 
+let audioElements = [];
 console.log(audioElements)
 
 /////////////// Oscilloscope Simulator ///////////////
@@ -20,6 +20,21 @@ function initializeWoscope(audioElement) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+
+    Papa.parse('projects.csv', {
+        download: true,
+        header: true,
+        complete: function(results) {
+            let projects = results.data;
+            console.log(projects);
+            setupButtons(projects);
+        },
+        error: function(error) {
+            console.error('Error parsing CSV:', error);
+        }
+    });
+
+    audioElements = Array.from(document.querySelectorAll('audio'));
     const volume = volumeSlider.value / 100;
     
     // Set initial volume for all audio elements
@@ -109,13 +124,14 @@ function replaceAudio4(file) {
     const newAudio4 = document.createElement('audio');
     newAudio4.id = 'audio4'; 
     newAudio4.src = URL.createObjectURL(file); // Set the source to the uploaded file
+    audioElements.push(newAudio4);
     newAudio4.addEventListener('loadeddata', () => {
         initializeWoscope(newAudio4)
-        newAudio4.volume = volumeSlider.value/100;
+        newAudio4.volume = volumeSlider.value / 100;
+        // updateVolume(volumeSlider.value);
         newAudio4.play(); // Play the new audio file once it is loaded
     });
     soundsDiv.appendChild(newAudio4);
-    audioElements.push(newAudio4);
 };
 
 function pauseAllAudio() {
@@ -127,12 +143,7 @@ function pauseAllAudio() {
 }
 
 function setCircleBorderColor(circle, index) {
-    const colors = [
-        'rgba(209, 185, 111, 0.9)',  
-        'rgba(158, 190, 120, 0.9)',  
-        'rgba(91, 140, 203, 0.9)',  
-        'rgba(205, 105, 94, 0.9)'    
-    ];
+    const colors = ['#d1b96f', '#9ebe78', '#5b8ccb', '#cd695e'];
     circle.style.borderColor = colors[index];
 }
 
@@ -149,74 +160,9 @@ document.getElementById("info-btn").addEventListener("click", function() {
 document.getElementById("home-btn").addEventListener("click", function() {
     removeInfo();
     removeIframe();
-    pauseAllAudio();
 });
 
 // Refactored project buttons
-document.addEventListener("DOMContentLoaded", function() {
-    fetch('projects.csv')
-        .then(response => response.text())
-        .then(csvText => {
-            let projects = CSVToArray(csvText, ",");
-            console.log(projects);
-            setupButtons(projects);
-        });
-});
- 
-// Parse CSV
-function CSVToArray(strData, strDelimiter) {
-    strDelimiter = (strDelimiter || ",");
-
-    // Regular expression to parse CSV
-    var objPattern = new RegExp(
-        (
-            // Delimiters
-            "(\\" + strDelimiter + "|\\r?\\n|\\r|^)" +
-            // Quoted fields
-            "(?:\"([^\"]*(?:\"\"[^\"]*)*)\"|" +
-            // Standard fields
-            "([^\"\\" + strDelimiter + "\\r\\n]*))"
-        ),
-        "gi"
-    );
-
-    var arrData = [[]];
-    var arrMatches = null;
-
-    // Loop through all matches
-    while (arrMatches = objPattern.exec(strData)) {
-        var strMatchedDelimiter = arrMatches[1];
-        if (
-            strMatchedDelimiter.length &&
-            strMatchedDelimiter !== strDelimiter
-        ) {
-            arrData.push([]);
-        }
-
-        var strMatchedValue;
-        if (arrMatches[2]) {
-            // Handle quoted fields with embedded quotes
-            strMatchedValue = arrMatches[2].replace(new RegExp("\"\"", "g"), "\"");
-        } else {
-            // Handle standard fields
-            strMatchedValue = arrMatches[3];
-        }
-        arrData[arrData.length - 1].push(strMatchedValue);
-    }
-
-    var headers = arrData[0];
-    var dataRows = arrData.slice(1);
-    var result = dataRows.map(row => {
-        var rowObject = {};
-        headers.forEach((header, index) => {
-            rowObject[header] = row[index];
-        });
-        return rowObject;
-    });
-
-    return result;
-}
-
 function setupButtons(projects) {
     let projectsDiv = document.getElementById('projects-div');
     let numberOfButtons = 5;
@@ -228,7 +174,7 @@ function setupButtons(projects) {
         btn.src = buttonSrc;
         btn.id = 'btn';
         btn.draggable = false;
-        btn.alt = `Page ${i + 1}`
+        btn.alt = `Page ${i + 1} Button`
 
         btn.addEventListener('click', function() {
             pauseAllAudio();
@@ -264,7 +210,7 @@ function addIframe(projects) {
     iframeScreen.id = 'iframe-screen';
 
     projects.forEach((project, index) => {
-        let gridItem = createGridItem(project);
+        let gridItem = createIframeGrid(project);
         // Define grid column and row placement
         let row = Math.floor(index / 2) + 1;
         let column = (index % 2) + 1;
@@ -277,7 +223,7 @@ function addIframe(projects) {
     screenElement.appendChild(iframeScreen);
 }
 
-function createGridItem(project) {
+function createIframeGrid(project) {
     let gridItem = document.createElement('div');
     gridItem.style.border = '0.5px solid rebeccapurple';
     gridItem.style.position = 'relative';
@@ -323,13 +269,10 @@ document.getElementById('off-btn').addEventListener('click', function() {
       // If powered on, trigger power-off animation
       screen.classList.remove('power-on');
       screen.classList.add('power-off');
-      audioElements.forEach(audio => {
-        audio.volume = 0;
-      });
+      pauseAllAudio();
     } else {
       // If powered off, trigger power-on animation
       screen.classList.remove('power-off');
       screen.classList.add('power-on');
-      updateVolume(volumeSlider.value);
     }
   });

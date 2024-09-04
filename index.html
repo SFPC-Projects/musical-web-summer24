@@ -5,11 +5,11 @@
     <title>Musical Web Summer 2024</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image" href="assets/favicon.png"/>
+    <link rel="icon" type="image" href="assets/oscilloscope/favicon.png"/>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Syne+Mono&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@200..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Syne+Mono&family=Inconsolata:wght@200..900&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
     <link rel="stylesheet" href="styles.css">
 </head>
 
@@ -19,7 +19,7 @@
         <!-- Oscilloscope Screen -->
         <div id="screen-background"></div>
         <div id="screen">
-            <div id="about" style="display: none;">
+            <div id="about">
                 <h1>ABOUT THE MUSICAL WEB</h1>
                 <p>The Musical Web was a 10-week class focused on re-skilling music composition, co-exploring musicality on the web, and re-thinking ways to share musical experiences online. The goal was to discover new forms with modern mediums and to investigate HTML, CSS and Javascript as musical tools. Together we explored chance, live web APIs, multi-person networking, 3D spaces, and a variety of other frameworks to create sound on the web.</p>
                 <h2>Instructors</h2>
@@ -82,8 +82,8 @@
         <div id="menu">
 
             <div id="home-div">
-                <img id="info-btn" src="assets/oscilloscope/btn-info.png" alt="Info" draggable="false">
-                <img id="home-btn" src="assets/oscilloscope/btn-home.png" alt="Home" draggable="false">
+                <img id="info-btn" src="assets/oscilloscope/btn-info.png" alt="Info Button" draggable="false">
+                <img id="home-btn" src="assets/oscilloscope/btn-home.png" alt="Home Button" draggable="false">
             </div>
 
             <img id="projects-text" src="assets/oscilloscope/projects.png" alt="Projects" draggable="false">
@@ -95,25 +95,22 @@
                 <audio id="audio1" src="assets/audio/binaural.m4a"></audio>
                 <audio id="audio2" src="assets/audio/oscirender.wav"></audio>
                 <audio id="audio3" src="assets/audio/musicalweb.wav"></audio>
-                <audio id="audio4"></audio>
                 <input type="file" id="audio-upload" accept="audio/*" style="display: none;">
             </div>
 
             <img id="volume-text" src="assets/oscilloscope/volume.png" alt="Volume" draggable="false">
             <div id="volume-div">
-                <img class="volume-symbol" src="assets/oscilloscope/mute.png" alt="Mute" draggable="false">
-                <input type="range" min="0" max="100" value="50" class="slider" id="volume-slider" alt="Volume slider">
-                <img class="volume-symbol" src="assets/oscilloscope/full-volume.png" alt="Full volume" draggable="false">
+                <img class="volume-symbol" src="assets/oscilloscope/mute.png" draggable="false">
+                <input type="range" min="0" max="100" value="50" class="slider" id="volume-slider" alt="Volume Slider">
+                <img class="volume-symbol" src="assets/oscilloscope/full-volume.png" draggable="false">
             </div>
 
         </div>
         <div id="off"><img id="off-btn" src="assets/oscilloscope/off-btn.png" alt="Off" draggable="false"></div>
         <img src="assets/oscilloscope/oscilloscope.png" alt="oscilloscope" id="oscilloscope-img" alt="Oscilloscope" draggable="false">
-</body>
 
-</html>
-<script src="woscope.js"></script>
-<script src="script.js"></script>
-</body>
+    <script src="woscope.js"></script>
+    <script src="script.js"></script>
 
+</body>
 </html>
