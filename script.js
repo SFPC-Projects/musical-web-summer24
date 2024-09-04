@@ -1,9 +1,12 @@
 let screen = document.getElementById('screen');
 let infoScreen = document.getElementById('about');
 let myAudio1 = document.getElementById('audio1');
-let audioElements = document.querySelectorAll('#sounds-div audio');
+let audioElements = document.querySelectorAll('audio');
+let soundsDiv = document.getElementById('sounds-div');
+let volumeSlider = document.getElementById('volume-slider');
+let audioUpload = document.getElementById('audio-upload');
 
-
+console.log(audioElements)
 
 /////////////// Oscilloscope Simulator ///////////////
 
@@ -17,14 +20,31 @@ function initializeWoscope(audioElement) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+    const volume = volumeSlider.value / 100;
+    
+    // Set initial volume for all audio elements
+    audioElements.forEach(audio => {
+        audio.volume = volume;
+    });
+
+    // Update volume whenever the slider is moved
+    volumeSlider.addEventListener('input', (event) => {
+        updateVolume(event.target.value);
+    });
+    
     initializeWoscope(myAudio1);
     myAudio1.play();
     initializeAudioButtons();
 })
 
-// Refactored sound buttons
+function updateVolume(value) {
+    const volume = value / 100;
+    audioElements.forEach(audio => {
+        audio.volume = volume;
+    });
+}
+
 function initializeAudioButtons() {
-    const soundsDiv = document.getElementById('sounds-div');
     
     for (let i = 0; i < 4; i++) {
         const buttonElement = document.createElement('div');
@@ -44,20 +64,67 @@ function initializeAudioButtons() {
 
         const audioId = `audio${i + 1}`;
         const audio = document.getElementById(audioId);
-        img.addEventListener('click', function() {
-            removeInfo();
-            removeIframe();
-            pauseAllAudio();
-            initializeWoscope(audio);
-            audio.play();
-        });
+
+        if (i === 3) { // Handle file upload for the last button
+            img.title = "Upload sound"
+            img.addEventListener('click', function() {
+                pauseAllAudio();
+                removeInfo();
+                removeIframe();
+                audioUpload.click();
+            });
+
+            audioUpload.addEventListener('input', function(event) {
+                const file = event.target.files[0];
+                if (file) {
+                    replaceAudio4(file);
+                }
+                event.target.value = '';
+            });
+        } else {
+            img.addEventListener('click', function() {
+                removeInfo();
+                removeIframe();
+                pauseAllAudio();
+                initializeWoscope(audio);
+                audio.play();
+            });
+        }
 
         soundsDiv.appendChild(buttonElement);
 
         const circle = buttonElement.querySelector('.circle');
         setCircleBorderColor(circle, i);
     }
+}
+
+function replaceAudio4(file) {
+    // Remove existing audio4 element if it exists
+    const existingAudio4 = document.getElementById('audio4');
+    if (existingAudio4) {
+        existingAudio4.remove();
+    }
+
+    // Create a new audio element
+    const newAudio4 = document.createElement('audio');
+    newAudio4.id = 'audio4'; 
+    newAudio4.src = URL.createObjectURL(file); // Set the source to the uploaded file
+    newAudio4.addEventListener('loadeddata', () => {
+        initializeWoscope(newAudio4)
+        newAudio4.volume = volumeSlider.value/100;
+        newAudio4.play(); // Play the new audio file once it is loaded
+    });
+    soundsDiv.appendChild(newAudio4);
+    audioElements.push(newAudio4);
 };
+
+function pauseAllAudio() {
+    let allAudioElements = document.querySelectorAll('audio');
+    allAudioElements.forEach(audio => {
+        console.log('Pausing audio:', audio.id); // Debugging line
+        audio.pause();
+    });
+}
 
 function setCircleBorderColor(circle, index) {
     const colors = [
@@ -67,11 +134,6 @@ function setCircleBorderColor(circle, index) {
         'rgba(205, 105, 94, 0.9)'    
     ];
     circle.style.borderColor = colors[index];
-}
-
-function pauseAllAudio() {
-    let allAudioElements = document.querySelectorAll('audio');
-    allAudioElements.forEach(audio => audio.pause());
 }
 
 
@@ -172,7 +234,8 @@ function setupButtons(projects) {
             pauseAllAudio();
             removeInfo();
             removeIframe();
-            addIframe(projects.slice(i*4, i*4+4)); // Display 4 projects on each page
+            // Display 4 projects on each page
+            addIframe(projects.slice(i*4, i*4+4))
         });
 
         projectsDiv.appendChild(btn);
@@ -260,10 +323,13 @@ document.getElementById('off-btn').addEventListener('click', function() {
       // If powered on, trigger power-off animation
       screen.classList.remove('power-on');
       screen.classList.add('power-off');
-      pauseAllAudio();
+      audioElements.forEach(audio => {
+        audio.volume = 0;
+      });
     } else {
       // If powered off, trigger power-on animation
       screen.classList.remove('power-off');
       screen.classList.add('power-on');
+      updateVolume(volumeSlider.value);
     }
   });

@@ -95,8 +95,17 @@
                 <audio id="audio1" src="assets/audio/binaural.m4a"></audio>
                 <audio id="audio2" src="assets/audio/oscirender.wav"></audio>
                 <audio id="audio3" src="assets/audio/musicalweb.wav"></audio>
-                <audio id="audio4" src="assets/audio/welcome.mp3"></audio>
+                <audio id="audio4"></audio>
+                <input type="file" id="audio-upload" accept="audio/*" style="display: none;">
             </div>
+
+            <img id="volume-text" src="assets/oscilloscope/volume.png" alt="Volume" draggable="false">
+            <div id="volume-div">
+                <img class="volume-symbol" src="assets/oscilloscope/mute.png" alt="Mute" draggable="false">
+                <input type="range" min="0" max="100" value="50" class="slider" id="volume-slider" alt="Volume slider">
+                <img class="volume-symbol" src="assets/oscilloscope/full-volume.png" alt="Full volume" draggable="false">
+            </div>
+
         </div>
         <div id="off"><img id="off-btn" src="assets/oscilloscope/off-btn.png" alt="Off" draggable="false"></div>
         <img src="assets/oscilloscope/oscilloscope.png" alt="oscilloscope" id="oscilloscope-img" alt="Oscilloscope" draggable="false">

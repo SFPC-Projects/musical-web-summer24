@@ -8,6 +8,7 @@ html, body {
     font-optical-sizing: auto;
     font-weight: 400;
     font-style: normal;
+    font-size: 1.2vw;
 
     /* Disable highlighting */
     -webkit-touch-callout: none; /* iOS Safari */
@@ -21,11 +22,11 @@ html, body {
 /* ------ Oscilloscope Img ------ */
 #grid-wrapper {
     width: 85%;
-    height: 90%;
+    height: auto;
+    aspect-ratio: 1.9; /* Example ratio, adjust as needed */
     margin: auto; 
     position: relative;
     display: grid;
-    /* Grid sizes measured in Figma */
     grid-template-columns: 118fr 786fr 51fr 567fr 46fr; 
     grid-template-rows: 35fr 64fr 472fr 65fr 70fr 45fr 63fr;
 }
@@ -80,6 +81,14 @@ h1, h2 {
     font-family: "Syne Mono", monospace;
 }
 
+h1 {
+    font-size: 2.2vw;
+}
+
+h2 {
+    font-size: 1.7vw;
+}
+
 /* iFrames */
 #iframe-screen{
     display: grid;
@@ -92,13 +101,14 @@ h1, h2 {
 }
 
 iframe {
-    width: 200%;
-    height: 200%;
     border: none;
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%) scale(0.5); 
+    /* Zoom out */
+    height: 400%;
+    width: 400%;
+    transform: translate(-50%, -50%) scale(0.25); 
 }
 
 .project-image {
@@ -119,7 +129,7 @@ iframe {
     background-color: rgba(0, 0, 0, 0.8);
     justify-content: start;
     color: white;
-    font-size: 1.1vw;
+    font-size: 0.9vw;
     text-align: center;
     display: none;
     flex-direction: column;
@@ -129,10 +139,6 @@ iframe {
     padding: 1vw;  
     z-index: 999;
     cursor: pointer;
-}
-
-#overlay:hover > h2 {
-    color: #dbf74f;
 }
 
 /* Home page */
@@ -172,7 +178,7 @@ iframe {
 }
 
 #projects-text, #sounds-text, #volume-text {
-    max-width: calc(100% - 4vw);
+    width: calc(100% - 4vw);
     filter: blur(0.03vw);
     opacity: 90%;
 }
@@ -192,11 +198,11 @@ iframe {
 #info-btn, #home-btn{
     cursor: pointer;
     width: 6vw;
-    filter: drop-shadow(0px 3px 1px rgba(34, 34, 34, 0.4));
+    filter: drop-shadow(0 0.2vw 0.1vw rgba(34, 34, 34, 0.4));
 }
 
 #info-btn:active, #home-btn:active{
-    transform: translateY(3px);
+    transform: translateY(0.2vw);
     filter: none;
 }
 
@@ -211,25 +217,19 @@ iframe {
 #btn {
     cursor: pointer;
     width: 4vw;
-    filter: drop-shadow(0px 3px 1px rgba(34, 34, 34, 0.4))
+    filter: drop-shadow(0px 0.2vw 0.1vw rgba(34, 34, 34, 0.4))
             blur(0.05vw);
     opacity:95%;
 }
 
 #btn:active {
-    transform: translateY(3px);
+    transform: translateY(0.2vw);
     filter :blur(0.05vw);
 }
 
 /* Sound buttons */
 #sounds-div {
-    width: calc(100% - 8vh);
     display: flex;
-    justify-content: space-between;
-    align-items: center; /* Center align items vertically */
-    padding-top: -2vw; /* Optional: Adjust padding to reduce space */
-    margin-top: 10; /* Remove any default margin */
-    box-sizing: border-box; /* Include padding in the width calculation */
 }
 
 .sound-btn {
@@ -237,12 +237,12 @@ iframe {
     margin-left: .6vw;
     cursor: pointer;
     height: 3vw;
-    filter: drop-shadow(-2px -2px 0.4px rgba(34, 34, 34, 0.3));
+    filter: drop-shadow(-0.1vw -0.1vw 0.05vw rgba(34, 34, 34, 0.3));
     display: flex;
 }
 
 #sounds-div img:active{
-    transform: translateX(-2px) translateY(-2px);
+    transform: translateX(-0.2vw) translateY(-0.2vw);
     filter: none;
 }
 
@@ -273,8 +273,81 @@ iframe {
     width: 1.5vw;
     margin: 0.2vw 1vw;
     opacity: 55%;
-    filter: drop-shadow(1.5px 1.5px 1.5px rgba(34, 34, 34, 0.3))
+    filter: drop-shadow(0.1vw 0.1vw 0.1vw rgba(34, 34, 34, 0.3))
             blur(0.05vw);
+}
+
+/* Slider CSS from https://codepen.io/noahblon/pen/OyajvN */
+
+input[type="range"] { 
+    margin: auto;
+    -webkit-appearance: none;
+    position: relative;
+    overflow: hidden;
+    height: 2vw;
+    width: 20vw;
+    cursor: pointer;
+    border-radius: 0;
+    filter: blur(0.05vw);
+}
+
+::-webkit-slider-runnable-track {
+    background: #ddd;
+}
+
+::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 1vw;
+    height: 2vw;
+    background: #E7E7E2;
+    box-shadow: -20vw 0 0 20vw #AFAEA8;
+    border: 0.05vw solid #999;
+}
+
+::-moz-range-track {
+    height: 2vw;
+    background: #ddd;
+}
+
+::-moz-range-thumb {
+    background: #E7E7E2;
+    height: 2vw;
+    width: 1vw;
+    border: 0.05vw solid #999;
+    border-radius: 0 !important;
+    box-shadow: -20vw 0 0 20vw #AFAEA8;
+    box-sizing: border-box;
+}
+
+::-ms-fill-lower { 
+    background: #AFAEA8;
+}
+
+::-ms-thumb { 
+    background: #E7E7E2;
+    border: 0.05vw solid #999;
+    height: 2vw;
+    width: 1vw;
+    box-sizing: border-box;
+}
+
+::-ms-ticks-after { 
+    display: none; 
+}
+
+::-ms-ticks-before { 
+    display: none; 
+}
+
+::-ms-track { 
+    background: #ddd;
+    color: transparent;
+    height: 2vw;
+    border: none;
+}
+
+::-ms-tooltip { 
+    display: none;
 }
 
 /* Off Button */
@@ -292,12 +365,12 @@ iframe {
     grid-column: 2/3;
     cursor: pointer;
     height: 2.5vw;
-    filter: drop-shadow(0px 2px 1px rgba(34, 34, 34, 0.5))
+    filter: drop-shadow(0 0.2vw 0.1vw rgba(34, 34, 34, 0.5))
         blur(0.05vw);
 }
 
 #off-btn:active {
-    transform: translateY(2px);
+    transform: translateY(0.2vw);
     filter: blur(0.05vw);
 }
 
